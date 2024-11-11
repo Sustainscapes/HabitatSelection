@@ -1,0 +1,19 @@
+Package: HabitatSelection
+Title: Expert Habitat Selection from Experts
+Version: 0.0.0.9000
+Authors@R: 
+    person("Derek", "Corcoran", , "derek.corcoran.barrios@gmail.com", role = c("aut", "cre"))
+Description: App for getting and storing expert habitat selection data for Danish Plants
+License: MIT + file LICENSE
+Imports: 
+    config,
+    golem,
+    shiny
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Suggests: 
+    spelling,
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Language: en-US

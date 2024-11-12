@@ -16,6 +16,12 @@ app_ui <- function(request) {
         sidebarPanel(
           h3("Environmental Gradients"),
 
+          textInput("user_name", "Enter Your Name:", placeholder = "Type your name here"),
+
+          actionButton("generate_species", "Generate Random Species"),
+
+          textOutput("species_name"),
+
           # Gradient selection using the reusable module with custom choices
           mod_gradient_axis_ui("axis_open_closed", "Open vs Closed", choices = c("Open", "Forest", "Both", "Don't know")),
           mod_gradient_axis_ui("axis_wet_dry", "Wet vs Dry", choices = c("Wet", "Dry", "Both", "Don't know")),

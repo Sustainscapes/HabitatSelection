@@ -7,35 +7,28 @@
 app_ui <- function(request) {
   tagList(
     # Leave this function for adding external resources
-    golem_add_external_resources(),
+    #golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      golem::golem_welcome_page() # Remove this line to start building your UI
-    )
-  )
-}
+      titlePanel("Habitat Selection for Random Plant Species in Denmark"),
 
-#' Add external Resources to the Application
-#'
-#' This function is internally used to add external
-#' resources inside the Shiny application.
-#'
-#' @import shiny
-#' @importFrom golem add_resource_path activate_js favicon bundle_resources
-#' @noRd
-golem_add_external_resources <- function() {
-  add_resource_path(
-    "www",
-    app_sys("app/www")
-  )
+      sidebarLayout(
+        sidebarPanel(
+          h3("Environmental Gradients"),
 
-  tags$head(
-    favicon(),
-    bundle_resources(
-      path = app_sys("app/www"),
-      app_title = "HabitatSelection"
+          # Gradient selection using the reusable module with custom choices
+          mod_gradient_axis_ui("axis_open_closed", "Open vs Closed", choices = c("Open", "Forest", "Both", "Don't know")),
+          mod_gradient_axis_ui("axis_wet_dry", "Wet vs Dry", choices = c("Wet", "Dry", "Both", "Don't know")),
+          mod_gradient_axis_ui("axis_rich_poor", "Rich vs Poor", choices = c("Rich Soil", "Poor Soil", "Both", "Don't know")),
+
+          actionButton("save_button", "Save Selection")
+        ),
+
+        mainPanel(
+          h3("Summary of User Selections"),
+          tableOutput("summary_table") # Output table to display user selections
+        )
+      )
     )
-    # Add here other external resources
-    # for example, you can add shinyalert::useShinyalert()
   )
 }

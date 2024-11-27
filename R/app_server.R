@@ -25,7 +25,7 @@ app_server <- function(input, output, session) {
     if (is.null(selected_species)) {
       return("No species selected yet. Click 'Generate Random Species' to start.")
     } else {
-      paste("Current Species: ", selected_species$species,
+      paste("Current Species: ", selected_species$accepteret_dansk_navn, paste0("(",selected_species$species,")"),
             " (Genus: ", selected_species$genus,
             ", Family: ", selected_species$family, ")")
     }

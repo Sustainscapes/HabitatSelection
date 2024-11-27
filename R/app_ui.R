@@ -10,7 +10,7 @@ app_ui <- function(request) {
     #golem_add_external_resources(),
     # Your application UI logic
     fluidPage(
-      titlePanel("Habitat Selection for Random Plant Species in Denmark"),
+      titlePanel("Habitat Selection for Plant Species in Denmark"),
 
       sidebarLayout(
         sidebarPanel(
@@ -23,7 +23,7 @@ app_ui <- function(request) {
           textOutput("species_name"),
 
           # Gradient selection using the reusable module with custom choices
-          mod_gradient_axis_ui("axis_open_closed", "Open vs Closed", choices = c("Open", "Forest", "Both", "Don't know")),
+          mod_gradient_axis_ui("axis_open_closed", "Open vs Forest", choices = c("Open", "Forest", "Both", "Don't know")),
           mod_gradient_axis_ui("axis_wet_dry", "Wet vs Dry", choices = c("Wet", "Dry", "Both", "Don't know")),
           mod_gradient_axis_ui("axis_rich_poor", "Rich vs Poor", choices = c("Rich Soil", "Poor Soil", "Both", "Don't know")),
 

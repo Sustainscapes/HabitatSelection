@@ -4,11 +4,9 @@
 #'     DO NOT REMOVE.
 #' @import shiny
 #' @noRd
+
 app_ui <- function(request) {
   tagList(
-    # Leave this function for adding external resources
-    #golem_add_external_resources(),
-    # Your application UI logic
     fluidPage(
       titlePanel("Habitat Selection for Plant Species in Denmark"),
 
@@ -16,7 +14,7 @@ app_ui <- function(request) {
         sidebarPanel(
           h3("Environmental Gradients"),
 
-          textInput("user_name", "Enter Your Name:", placeholder = "Type your name here"),
+          selectizeInput("user_name", "Enter Your Name:", choices = NULL, options = list(create = TRUE)),
 
           actionButton("generate_species", "Generate Random Species"),
 

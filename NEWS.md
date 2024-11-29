@@ -1,3 +1,5 @@
 # HabitatSelection (development version)
 
-* Initial CRAN submission.
+* Added several functionalities
+* Files can be written to any location
+

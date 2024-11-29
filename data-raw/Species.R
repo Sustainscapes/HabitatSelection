@@ -8,4 +8,8 @@ taxonomy <- read.csv("data-raw/TaxonomyPlus.csv") |> dplyr::select(species, acce
 species <- species |>
   dplyr::left_join(taxonomy)
 
+species <- species %>%
+  mutate(accepteret_dansk_navn = iconv(accepteret_dansk_navn, from = "", to = "UTF-8"))
+
+
 usethis::use_data(species, overwrite = TRUE)

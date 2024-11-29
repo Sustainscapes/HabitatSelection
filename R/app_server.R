@@ -3,33 +3,67 @@
 #' @param input,output,session Internal parameters for {shiny}.
 #'     DO NOT REMOVE.
 #' @import shiny
+#' @importFrom shinyFiles shinyDirButton shinyDirChoose parseDirPath
+#' @importFrom utils read.csv write.csv
 #' @noRd
 
 app_server <- function(input, output, session) {
 
+  # Initialize file paths
+  volumes <- c(Home = normalizePath("~"))
+  selected_folder <- reactiveVal(normalizePath("~")) # Default to home directory
+
+  # Allow users to select a folder
+  shinyFiles::shinyDirChoose(input, "folder", roots = volumes, session = session, filetypes = c("", "csv"), allowDir = TRUE)
+
+  # Update the selected folder when a folder is chosen
+  observeEvent(input$folder, {
+    path <- shinyFiles::parseDirPath(volumes, input$folder)
+    if (length(path) > 0) {
+      selected_folder(path)
+    }
+  })
+
+  # Display the selected folder path
+  output$selected_folder <- renderText({
+    paste("Selected Folder: ", selected_folder())
+  })
+
   # Path to the CSV file
-  csv_file <- "user_selections.csv"
+  csv_file <- reactive({
+    file.path(selected_folder(), "user_selections.csv")
+  })
 
   # Load existing data if the CSV file exists
-  existing_data <- if (file.exists(csv_file)) {
-    read.csv(csv_file, stringsAsFactors = FALSE)
-  } else {
-    data.frame(User_Name = character(),
-               Family = character(),
-               Genus = character(),
-               Species = character(),
-               Open_Closed = character(),
-               Wet_Dry = character(),
-               Rich_Poor = character(),
-               stringsAsFactors = FALSE)
-  }
+  existing_data <- reactive({
+    if (file.exists(csv_file())) {
+      read.csv(csv_file(), stringsAsFactors = FALSE)
+    } else {
+      data.frame(
+        User_Name = character(),
+        Family = character(),
+        Genus = character(),
+        Species = character(),
+        Open_Closed = character(),
+        Wet_Dry = character(),
+        Rich_Poor = character(),
+        stringsAsFactors = FALSE
+      )
+    }
+  })
 
   # Reactive value for user data
-  species_data <- reactiveVal(existing_data)
+  species_data <- reactiveVal()
+
+  # Load existing data when the app starts
+  observe({
+    species_data(existing_data())
+  })
+
 
   # Filter species that have not been evaluated
   filtered_species <- reactive({
-    species[!species$species %in% species_data()$Species, ]
+    HabitatSelection::species[!HabitatSelection::species$species %in% species_data()$Species, ]
   })
 
   # Update username input with suggestions from existing data
@@ -80,23 +114,15 @@ app_server <- function(input, output, session) {
   observeEvent(input$save_button, {
     selected_species <- current_species()
 
-    # Debugging: Print lengths of each input to check for issues
-    cat("Debugging lengths:\n")
-    cat("User Name Length: ", length(input$user_name), "\n")
-    cat("Selected Species Length: ", if (!is.null(selected_species)) 1 else 0, "\n")
-    cat("Open_Closed Length: ", length(open_closed()), "\n")
-    cat("Wet_Dry Length: ", length(wet_dry()), "\n")
-    cat("Rich_Poor Length: ", length(rich_poor()), "\n")
-
     if (!is.null(selected_species) && nchar(input$user_name) > 0) {
       new_entry <- data.frame(
         User_Name = input$user_name,
         Family = selected_species$family,
         Genus = selected_species$genus,
         Species = selected_species$species,
-        Open_Closed = open_closed(),   # Use the reactive value
-        Wet_Dry = wet_dry(),           # Use the reactive value
-        Rich_Poor = rich_poor(),       # Use the reactive value
+        Open_Closed = open_closed(),
+        Wet_Dry = wet_dry(),
+        Rich_Poor = rich_poor(),
         stringsAsFactors = FALSE
       )
 
@@ -104,8 +130,8 @@ app_server <- function(input, output, session) {
       current_data <- species_data()
       species_data(rbind(current_data, new_entry))
 
-      # Automatically save to the CSV file
-      write.csv(species_data(), csv_file, row.names = FALSE)
+      # Automatically save to the selected CSV file
+      write.csv(species_data(), csv_file(), row.names = FALSE)
 
       # Notify the user that progress is saved
       showNotification("Selection saved successfully.", type = "message")

@@ -1,17 +1,22 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `{HabitatSelection}`
+# `HabitatSelection`
 
 <!-- badges: start -->
+
+[![Lifecycle:
+experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![R-CMD-check](https://github.com/Sustainscapes/HabitatSelection/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Sustainscapes/HabitatSelection/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ## Installation
 
-You can install the development version of `{HabitatSelection}` like so:
+You can install the development version of `HabitatSelection` like so:
 
 ``` r
-# FILL THIS IN! HOW CAN PEOPLE INSTALL YOUR DEV PACKAGE?
+library(remotes)
+remotes::install_github("Sustainscapes/HabitatSelection")
 ```
 
 ## Run
@@ -30,30 +35,36 @@ This README has been compiled on the
 
 ``` r
 Sys.time()
-#> [1] "2024-11-11 09:15:41 CET"
+#> [1] "2024-11-29 06:59:36 CET"
 ```
 
 Here are the tests results and package coverage:
 
 ``` r
 devtools::check(quiet = TRUE)
-#> ────────────────────────────────────────────────────────────────────────────────
-#> ℹ Installed roxygen2 version (7.3.2) doesn't match required version (7.1.1)
-#> ✖ check() will not re-document this package
-#> ────────────────────────────────────────────────────────────────────────────────
+#> ℹ Loading HabitatSelection
 #> ── R CMD check results ──────────────────────── HabitatSelection 0.0.0.9000 ────
-#> Duration: 1m 19.4s
+#> Duration: 46.1s
 #> 
-#> ❯ checking DESCRIPTION meta-information ... NOTE
-#>   Malformed Description field: should contain one or more complete sentences.
+#> ❯ checking for future file timestamps ... NOTE
+#>   unable to verify current time
 #> 
-#> 0 errors ✔ | 0 warnings ✔ | 1 note ✖
+#> ❯ checking package subdirectories ...Warning: program compiled against libxml 210 using older 209
+#>    NOTE
+#>   Problems with news in ‘NEWS.md’:
+#>   No news entries found.
+#> 
+#> 0 errors ✔ | 0 warnings ✔ | 2 notes ✖
 ```
 
 ``` r
 covr::package_coverage()
-#> HabitatSelection Coverage: 0.00%
-#> R/app_config.R: 0.00%
-#> R/app_ui.R: 0.00%
+#> HabitatSelection Coverage: 85.57%
 #> R/run_app.R: 0.00%
+#> R/app_server.R: 66.67%
+#> R/app_config.R: 100.00%
+#> R/app_ui.R: 100.00%
+#> R/golem_utils_server.R: 100.00%
+#> R/golem_utils_ui.R: 100.00%
+#> R/mod_gradient_axis.R: 100.00%
 ```

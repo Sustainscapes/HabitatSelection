@@ -4,17 +4,20 @@ Version: 0.0.0.9000
 Authors@R: 
     person("Derek", "Corcoran", , "derek.corcoran.barrios@gmail.com", role = c("aut", "cre"))
 Description: App for getting and storing expert habitat selection data for
-    Danish Plants
+    Danish Plants.
 License: MIT + file LICENSE
 URL: https://github.com/Sustainscapes/HabitatSelection
 BugReports: https://github.com/Sustainscapes/HabitatSelection/issues
 Imports: 
     config,
     golem,
-    shiny
+    shiny,
+    shinyFiles,
+    utils
 Suggests: 
     spelling,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    waldo
 Config/testthat/edition: 3
 Encoding: UTF-8
 Language: en-US

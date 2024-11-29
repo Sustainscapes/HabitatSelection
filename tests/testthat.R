@@ -8,5 +8,6 @@
 
 library(testthat)
 library(HabitatSelection)
+library(waldo)
 
 test_check("HabitatSelection")
